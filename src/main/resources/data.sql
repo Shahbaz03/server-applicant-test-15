@@ -40,3 +40,23 @@ values
  (8,
  'aced0005737200226f72672e737072696e676672616d65776f726b2e646174612e67656f2e506f696e7431b9e90ef11a4006020002440001784400017978704023000000000000404bfa1cac083127', now(), now(), false, 'ONLINE',
 'driver08pw', 'driver08');
+
+
+
+insert into vehicle (booking_status, color, date_created, deleted, license_plate, convertible, engine_type, name, seat_count, manufacturer_name, rating, id) values ('UNBOOK', 'RED', now(), false, 'WB04555', false, 'ELECTRIC', 'BMWi23', 3, 'BMW', 8, 10023 );
+
+
+insert into vehicle (booking_status, color, date_created, deleted, license_plate, convertible, engine_type, name, seat_count, manufacturer_name, rating, id) values ('BOOK', 'BLUE', now(), false, 'PN04551', false, 'PETROL', 'honda city', 3, 'Honda', 8, 10024 );
+
+
+insert into vehicle (booking_status, color, date_created, deleted, license_plate, convertible, engine_type, name, seat_count, manufacturer_name, rating, id) values ('UNBOOK', 'BLACK', now(), false, 'KA04555', false, 'GAS', 'maruti 800', 3, 'Maruti', 7, 10025);---- Create 1 Manufacturer
+--
+--insert into vehicle_manufacturer (id, name) values (1, 'Honda');
+--
+---- Create 1 Vehicle_Model
+--
+--insert into vehicle_model (id, name, seat_count, convertible, engine_type, manufacturer) values (1, 'Honda City', 5, false, 'DIESEL', 1);
+--
+---- Create 1 Vehicle
+--
+--insert into vehicle (id, date_created, model, license_plate, rating , color) values (1, now(), 1, 'WB04 7890', null, 'RED');

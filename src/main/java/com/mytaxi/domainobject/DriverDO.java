@@ -16,118 +16,105 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(
-    name = "driver",
-    uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = {"username"})
-)
-public class DriverDO
-{
+@Table(name = "driver", uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = { "username" }))
+public class DriverDO {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    @Column(nullable = false)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private ZonedDateTime dateCreated = ZonedDateTime.now();
+	@Column(nullable = false)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	private ZonedDateTime dateCreated = ZonedDateTime.now();
 
-    @Column(nullable = false)
-    @NotNull(message = "Username can not be null!")
-    private String username;
+	@Column(nullable = false)
+	@NotNull(message = "Username can not be null!")
+	private String username;
 
-    @Column(nullable = false)
-    @NotNull(message = "Password can not be null!")
-    private String password;
+	@Column(nullable = false)
+	@NotNull(message = "Password can not be null!")
+	private String password;
 
-    @Column(nullable = false)
-    private Boolean deleted = false;
+	@Column(nullable = false)
+	private Boolean deleted = false;
 
-    @Embedded
-    private GeoCoordinate coordinate;
+	@Column(nullable = true)
+	private Long vehicleId;
 
-    @Column
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private ZonedDateTime dateCoordinateUpdated = ZonedDateTime.now();
+	@Embedded
+	private GeoCoordinate coordinate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OnlineStatus onlineStatus;
+	@Column
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	private ZonedDateTime dateCoordinateUpdated = ZonedDateTime.now();
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private OnlineStatus onlineStatus;
 
-    private DriverDO()
-    {
-    }
+	private DriverDO() {
+	}
 
+	public DriverDO(String username, String password) {
+		this.username = username;
+		this.password = password;
+		this.deleted = false;
+		this.coordinate = null;
+		this.dateCoordinateUpdated = null;
+		this.onlineStatus = OnlineStatus.OFFLINE;
+	}
 
-    public DriverDO(String username, String password)
-    {
-        this.username = username;
-        this.password = password;
-        this.deleted = false;
-        this.coordinate = null;
-        this.dateCoordinateUpdated = null;
-        this.onlineStatus = OnlineStatus.OFFLINE;
-    }
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getId()
-    {
-        return id;
-    }
+	public String getUsername() {
+		return username;
+	}
 
+	public String getPassword() {
+		return password;
+	}
 
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
+	public Boolean getDeleted() {
+		return deleted;
+	}
 
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
 
-    public String getUsername()
-    {
-        return username;
-    }
+	public OnlineStatus getOnlineStatus() {
+		return onlineStatus;
+	}
 
+	public void setOnlineStatus(OnlineStatus onlineStatus) {
+		this.onlineStatus = onlineStatus;
+	}
 
-    public String getPassword()
-    {
-        return password;
-    }
+	public GeoCoordinate getCoordinate() {
+		return coordinate;
+	}
 
+	public void setCoordinate(GeoCoordinate coordinate) {
+		this.coordinate = coordinate;
+		this.dateCoordinateUpdated = ZonedDateTime.now();
+	}
 
-    public Boolean getDeleted()
-    {
-        return deleted;
-    }
+	public Long getVehicleId() {
+		return vehicleId;
+	}
 
+	public void setVehicleId(Long vehicleId) {
+		this.vehicleId = vehicleId;
+	}
 
-    public void setDeleted(Boolean deleted)
-    {
-        this.deleted = deleted;
-    }
-
-
-    public OnlineStatus getOnlineStatus()
-    {
-        return onlineStatus;
-    }
-
-
-    public void setOnlineStatus(OnlineStatus onlineStatus)
-    {
-        this.onlineStatus = onlineStatus;
-    }
-
-
-    public GeoCoordinate getCoordinate()
-    {
-        return coordinate;
-    }
-
-
-    public void setCoordinate(GeoCoordinate coordinate)
-    {
-        this.coordinate = coordinate;
-        this.dateCoordinateUpdated = ZonedDateTime.now();
-    }
+	public boolean isOnline() {
+		return getOnlineStatus() == OnlineStatus.ONLINE;
+	}
 
 }
