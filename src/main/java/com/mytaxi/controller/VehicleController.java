@@ -22,42 +22,44 @@ import com.mytaxi.datatransferobject.VehicleDTO;
 import com.mytaxi.domainobject.VehicleDO;
 import com.mytaxi.domainvalue.BookingStatus;
 import com.mytaxi.exception.ConstraintsViolationException;
-import com.mytaxi.exception.EntityNotFoundException;
 import com.mytaxi.service.vehicle.VehicleService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("v1/vehicle")
+@Api(tags = {"tag1"})
 public class VehicleController {
 
 	@Autowired
 	private VehicleService vehicleService;
 
 	@GetMapping("/{vehicleID}")
-	public VehicleDTO getCar(@Valid @PathVariable long carId) throws EntityNotFoundException {
-		return VehicleMapper.makeVehicleDTO(vehicleService.find(carId));
+	public VehicleDTO getCar(@Valid @PathVariable long vehicleId) {
+		return VehicleMapper.makeVehicleDTO(vehicleService.find(vehicleId));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public VehicleDO createCar(@Valid @RequestBody VehicleDTO vehicleDTO) throws ConstraintsViolationException {
-		VehicleDO vehicleDO = VehicleMapper.makeVehicleDO(vehicleDTO);
-		return vehicleService.create(vehicleDO);
+		return vehicleService.create(VehicleMapper.makeVehicleDO(vehicleDTO));
 	}
 
 	@DeleteMapping("/{vehicleID}")
-	public void deleteCar(@Valid @PathVariable long carId) throws EntityNotFoundException {
-		vehicleService.delete(carId);
+	public void deleteCar(@Valid @PathVariable long vehicleId) {
+		vehicleService.delete(vehicleId);
 	}
 
 	@PutMapping("/{vehicleID}")
-	public void updateBookingStatus(@Valid @PathVariable long vehicleId, @RequestParam BookingStatus bookingStatus)
-			throws ConstraintsViolationException, EntityNotFoundException {
+	public void updateBookingStatus(@Valid @PathVariable long vehicleId, @RequestParam BookingStatus bookingStatus) {
 		vehicleService.updateBookingStatus(vehicleService.find(vehicleId), bookingStatus);
 	}
 
 	@GetMapping
-	public List<VehicleDTO> findVehicles() throws ConstraintsViolationException, EntityNotFoundException {
-		return VehicleMapper.makeVehicleDTOList(vehicleService.findAll());
+	@ApiOperation(value="It finds the vehicles")
+	public List<VehicleDTO> findVehicles(@RequestParam(required = false) boolean showDeleted) {
+		return VehicleMapper.makeVehicleDTOList(vehicleService.findAll(), showDeleted);
 	}
 
 }

@@ -17,6 +17,10 @@ public interface VehicleService {
 
 	List<VehicleDO> findAll();
 
-	void updateBookingStatus(@Valid VehicleDO vehicle, BookingStatus bookingStatus);
+	void updateBookingStatus(@Valid VehicleDO vehicleId, BookingStatus bookingStatus);
+	
+	void createFlatFile(VehicleDO vehicleDO);
+	
+	void updateFlatFile(VehicleDO vehicleDO);
 
 }

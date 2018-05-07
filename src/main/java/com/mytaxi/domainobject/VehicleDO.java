@@ -26,13 +26,13 @@ public class VehicleDO {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private ZonedDateTime dateCreated = ZonedDateTime.now();
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private String licensePlate;
 
 	@Column(nullable = true)
 	private Integer rating;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	private String color;
 	
 	@Embedded
@@ -45,8 +45,15 @@ public class VehicleDO {
 	@Column(nullable = false)
 	private BookingStatus bookingStatus = BookingStatus.UNBOOK;
 	
+	@Column(nullable = true)
+	private Long driverId;
+	
 	public boolean isUnBooked() {
 		return getBookingStatus() == BookingStatus.UNBOOK;
+	}
+	
+	public boolean isDeleted() {
+		return getDeleted() == true;
 	}
 
 	public Long getId() {
@@ -112,5 +119,31 @@ public class VehicleDO {
 	public void setBookingStatus(BookingStatus bookingStatus) {
 		this.bookingStatus = bookingStatus;
 	}
+
+	public Long getDriverId() {
+		return driverId;
+	}
+
+	public void setDriverId(Long driverId) {
+		this.driverId = driverId;
+	}
+
+	@Override
+	public String toString() {
+		return 	"id=" + id 
+				+ ",licensePlate=" + licensePlate.toUpperCase()
+				+ ",rating=" + rating 
+				+ ",color=" + color.toUpperCase() 
+				+ ",name=" + model.getName().toUpperCase()
+				+ ",seatCount=" + model.getSeatCount() 
+				+ ",convertible=" + model.getConvertible()
+				+ ",engineType=" + model.getEngineType().name().toUpperCase()
+				+ ",manufacturer=" + model.getVehicleManufacturerDO().getManufacturerName().toUpperCase()
+				+ ",deleted=" + deleted 
+				+ ",bookingStatus=" + bookingStatus
+				+ ",driverId=" + driverId;
+	}
+	
+	
 	
 }

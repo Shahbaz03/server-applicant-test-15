@@ -4,6 +4,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mytaxi.domainvalue.BookingStatus;
 import com.mytaxi.domainvalue.EngineType;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -34,12 +36,15 @@ public class VehicleDTO {
     @NotNull(message = "Specify the Vehicle Manufacturer Name")
 	private String manufacturerName;
     
+    private BookingStatus bookingStatus;
+    
+    
     private VehicleDTO(){
     	
     }
     
     private VehicleDTO(Long id, String licensePlate, Integer rating, String color, String name, 
-    		Integer seatCount, Boolean convertible, EngineType engineType, String manufacturerName){
+    		Integer seatCount, Boolean convertible, EngineType engineType, String manufacturerName, BookingStatus bookingStatus){
     	this.id = id;
     	this.licensePlate = licensePlate;
     	this.rating = rating;
@@ -49,6 +54,7 @@ public class VehicleDTO {
     	this.convertible = convertible;
     	this.engineType = engineType;
     	this.manufacturerName = manufacturerName;
+    	this.bookingStatus = bookingStatus;
     }
     
     public static VehicleDTOBuilder newBuilder(){
@@ -65,6 +71,7 @@ public class VehicleDTO {
     	private Boolean convertible;
     	private EngineType engineType;
     	private String manufacturerName;
+    	private BookingStatus bookingStatus;
     	
 		public VehicleDTOBuilder setId(Long id) {
 			this.id = id;
@@ -110,13 +117,19 @@ public class VehicleDTO {
 			this.manufacturerName = manufacturerName;
 			return this;
 		}
+		
+		public VehicleDTOBuilder setBopokingStatus(BookingStatus bookingStatus) {
+			this.bookingStatus = bookingStatus;
+			return this;
+		}
 
 		public VehicleDTO createVehicleDTO(){
 	        return new VehicleDTO(id, licensePlate, rating, color, name, 
-	        		seatCount, convertible, engineType, manufacturerName);
+	        		seatCount, convertible, engineType, manufacturerName, bookingStatus);
 	    }
     }
 
+    @JsonProperty
 	public Long getId() {
 		return id;
 	}
@@ -187,6 +200,14 @@ public class VehicleDTO {
 
 	public void setManufacturerName(String manufacturerName) {
 		this.manufacturerName = manufacturerName;
+	}
+	
+	public BookingStatus getBookingStatus() {
+		return bookingStatus;
+	}
+
+	public void setBookingStatus(BookingStatus bookingStatus) {
+		this.bookingStatus = bookingStatus;
 	}
    
 }

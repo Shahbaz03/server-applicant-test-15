@@ -15,8 +15,10 @@ public class DriverMapper
     }
 
 
-    public static DriverDTO makeDriverDTO(DriverDO driverDO)
-    {
+    public static DriverDTO makeDriverDTO(DriverDO driverDO) {
+    	if(driverDO == null) {
+    		return null;
+    	}
         DriverDTO.DriverDTOBuilder driverDTOBuilder = DriverDTO.newBuilder()
             .setId(driverDO.getId())
             .setPassword(driverDO.getPassword())
@@ -32,10 +34,9 @@ public class DriverMapper
     }
 
 
-    public static List<DriverDTO> makeDriverDTOList(Collection<DriverDO> drivers)
-    {
-        return drivers.stream()
-            .map(DriverMapper::makeDriverDTO)
-            .collect(Collectors.toList());
+    public static List<DriverDTO> makeDriverDTOList(Collection<DriverDO> drivers, boolean showDeleted) {
+    	return showDeleted ? 
+    			drivers.stream().map(DriverMapper::makeDriverDTO).collect(Collectors.toList()) : 
+    				drivers.stream().filter(driver -> !driver.isDeleted()).map(DriverMapper::makeDriverDTO).collect(Collectors.toList());
     }
 }

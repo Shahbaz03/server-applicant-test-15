@@ -12,10 +12,10 @@ import com.mytaxi.domainobject.VehicleModelDO;
 
 public class VehicleMapper {
 
-	public static List<VehicleDTO> makeVehicleDTOList(List<VehicleDO> vehicles) {
-		return vehicles.stream()
-	            .map(VehicleMapper::makeVehicleDTO)
-	            .collect(Collectors.toList());
+	public static List<VehicleDTO> makeVehicleDTOList(List<VehicleDO> vehicles, boolean showDeleted) {
+		return showDeleted ? 
+				vehicles.stream().map(VehicleMapper::makeVehicleDTO).collect(Collectors.toList()) :
+					vehicles.stream().filter(vehicle -> !vehicle.isDeleted()).map(VehicleMapper::makeVehicleDTO).collect(Collectors.toList());
 	}
 
 	public static VehicleDO makeVehicleDO(@Valid VehicleDTO vehicleDTO) {

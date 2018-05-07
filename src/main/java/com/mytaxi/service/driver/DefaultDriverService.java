@@ -1,16 +1,19 @@
 package com.mytaxi.service.driver;
 
+import java.util.List;
+
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import com.mytaxi.dataaccessobject.DriverRepository;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.GeoCoordinate;
 import com.mytaxi.domainvalue.OnlineStatus;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.exception.EntityNotFoundException;
-import java.util.List;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service to encapsulate the link between DAO and controller and to have
@@ -72,8 +75,8 @@ public class DefaultDriverService implements DriverService {
 	@Transactional
 	public void delete(Long driverId) throws EntityNotFoundException {
 		DriverDO driverDO = findDriverChecked(driverId);
+		driverDO.setOnlineStatus(OnlineStatus.OFFLINE);
 		driverDO.setDeleted(true);
-		System.out.println(driverDO);
 	}
 
 	/**
@@ -98,17 +101,29 @@ public class DefaultDriverService implements DriverService {
 	 */
 	@Override
 	public List<DriverDO> find(OnlineStatus onlineStatus) {
-		return driverRepository.findByOnlineStatus(onlineStatus);
+		List<DriverDO> driversList = driverRepository.findByOnlineStatus(onlineStatus);
+		if(CollectionUtils.isEmpty(driversList))
+			throw new EntityNotFoundException("No Online Drivers in the System Currently");
+		return driversList;
 	}
+	
+	@Override
+	public DriverDO find(String username) {
+		DriverDO driverDO = driverRepository.findByUsername(username);
+		if(driverDO == null)
+			throw new EntityNotFoundException("Driver with the given username is not present");
+		return driverDO;
+	}
+	
+	@Override
+	public List<DriverDO> findAll() {
+		return (List<DriverDO>) driverRepository.findAll();
+	}
+
 
 	private DriverDO findDriverChecked(Long driverId) throws EntityNotFoundException {
-		return driverRepository.findById(driverId).filter(d -> !Boolean.TRUE.equals(d.getDeleted()))
+		return driverRepository.findById(driverId)
 				.orElseThrow(() -> new EntityNotFoundException("Could not find entity with id: " + driverId));
 	}
-
-	@Override
-	public void assignVehicle(DriverDO driver, Long vehicleId) {
-		driver.setVehicleId(vehicleId);
-	}
-
+	
 }

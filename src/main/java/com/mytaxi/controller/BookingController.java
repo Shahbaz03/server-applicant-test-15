@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mytaxi.datatransferobject.BookingDTO;
-import com.mytaxi.service.driver.BookingService;
+import com.mytaxi.service.booking.BookingService;
 
 @RestController
 @RequestMapping("v1/book")
@@ -20,7 +20,6 @@ public class BookingController {
 
 	@Autowired
 	public BookingController(BookingService bookingService) {
-		super();
 		this.bookingService = bookingService;
 	}
 

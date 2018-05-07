@@ -117,4 +117,12 @@ public class DriverDO {
 		return getOnlineStatus() == OnlineStatus.ONLINE;
 	}
 
+	public boolean hasVechicleAllocated() {
+		return getVehicleId() != null;
+	}
+	
+	public boolean isDeleted() {
+		return getDeleted() == true;
+	}
+
 }
