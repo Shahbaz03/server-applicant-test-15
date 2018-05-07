@@ -33,6 +33,7 @@ public class VehicleMapper {
 		vehicle.setColor(vehicleDTO.getColor());
 		vehicle.setLicensePlate(vehicleDTO.getLicensePlate());
 		vehicle.setModel(vehicleModel);
+		vehicle.setId(vehicleDTO.getId());
 		
 		return vehicle;
 	}

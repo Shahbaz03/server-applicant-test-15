@@ -15,17 +15,18 @@ import org.springframework.stereotype.Service;
 import com.mytaxi.datatransferobject.SearchResultsDTO;
 import com.mytaxi.domainvalue.BookingStatus;
 import com.mytaxi.domainvalue.EngineType;
+import com.mytaxi.exception.SearchException;
 
 @Service
 public class DefaultSearchService implements SearchService{
 
 	@Override
-	public List<SearchResultsDTO> search(String query) throws IOException {
+	public List<SearchResultsDTO> search(String query) {
 		Set<String> matchedDoc = getMatchedDocuments(query);
 		if(!matchedDoc.isEmpty())
 			return matchedDoc.stream().map(doc -> makeSearchResultsDTO(doc)).collect(Collectors.toList());
 		
-		throw new IOException();
+		throw new SearchException("No results Found for query=" + query);
 	}
 	
 	private SearchResultsDTO makeSearchResultsDTO(String document){
@@ -54,24 +55,24 @@ public class DefaultSearchService implements SearchService{
 	
 	
 
-	private Set<String> getMatchedDocuments(String query) throws IOException {
+	private Set<String> getMatchedDocuments(String query) {
 		Set<String> matchedDocName = new HashSet<>();
-
-		Files.newDirectoryStream(Paths.get("."), path -> path.toString().endsWith(".txt")).forEach(f -> {
-
-			try {
-				Files.lines(f).forEach(line -> {
-
-					String matchedID = getMatchedId(line, query);
-					if (matchedID != null) {
-						matchedDocName.add(matchedID);
-					}
-				});
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		});
+		try{
+			Files.newDirectoryStream(Paths.get("."), path -> path.toString().endsWith(".txt")).forEach(f -> {
+				try {
+					Files.lines(f).forEach(line -> {
+						String matchedID = getMatchedId(line, query);
+						if (matchedID != null) {
+							matchedDocName.add(matchedID);
+						}
+					});
+				} catch (IOException e) {
+					throw new SearchException(e.getMessage());
+				}
+			});
+		}catch(IOException ex){
+			throw new SearchException(ex.getMessage());
+		}
 		return matchedDocName;
 	}
 

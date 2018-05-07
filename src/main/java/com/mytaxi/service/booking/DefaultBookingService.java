@@ -18,7 +18,7 @@ import com.mytaxi.service.driver.DriverService;
 import com.mytaxi.service.vehicle.VehicleService;
 
 @Service
-public class DefaultBookingService {
+public class DefaultBookingService implements BookingService {
 	private VehicleService vehicleService;
 	private DriverService driverService;
 
@@ -28,6 +28,7 @@ public class DefaultBookingService {
 		this.driverService = driverService;
 	}
 
+	@Override
 	@Transactional
 	public void bookVehicle(BookingDTO bookingDTO) {
 		DriverDO driver = driverService.find(bookingDTO.getDriverID());
@@ -40,6 +41,7 @@ public class DefaultBookingService {
 		vehicleService.updateFlatFile(vehicle);	
 	}
 
+	@Override
 	@Transactional
 	public void unBookVehicle(Long driverId) {
 		DriverDO driver = driverService.find(driverId);
