@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.mytaxi.constants.SwaggerConstants.DRIVER_CONTROLLER;
 import com.google.common.collect.Lists;
 import com.mytaxi.controller.mapper.DriverMapper;
 import com.mytaxi.datatransferobject.DriverDTO;
@@ -24,11 +25,15 @@ import com.mytaxi.domainvalue.OnlineStatus;
 import com.mytaxi.exception.ConstraintsViolationException;
 import com.mytaxi.service.driver.DriverService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * All operations with a driver will be routed by this controller.
  * <p/>
  */
 @RestController
+@Api(tags = {DRIVER_CONTROLLER})
 @RequestMapping("v1/drivers")
 public class DriverController {
 
@@ -61,7 +66,17 @@ public class DriverController {
 		driverService.updateLocation(driverId, longitude, latitude);
 	}
 
+	/**
+	 * This is a generic method to find drivers.
+	 * It uses the query params to filter the list of drivers.
+	 * 
+	 * @param onlineStatus
+	 * @param username
+	 * @param showDeleted
+	 * @return
+	 */
 	@GetMapping
+	@ApiOperation(value = "Find Drivers. Find All, Find By Username, By Online Status.")
 	public List<DriverDTO> findDrivers(
 			@RequestParam(required = false) OnlineStatus onlineStatus, 
 			@RequestParam(required = false) String username,

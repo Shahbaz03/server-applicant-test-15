@@ -7,6 +7,12 @@ import javax.validation.Valid;
 import com.mytaxi.domainobject.VehicleDO;
 import com.mytaxi.domainvalue.BookingStatus;
 
+/**
+ * The vehicle service interface
+ * 
+ * @author Shahbaz.Alam
+ *
+ */
 public interface VehicleService {
 
 	VehicleDO find(@Valid long carId);

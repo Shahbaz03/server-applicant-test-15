@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.mytaxi.constants.SwaggerConstants.VEHICLE_CONTROLLER;
 import com.mytaxi.controller.mapper.VehicleMapper;
 import com.mytaxi.datatransferobject.VehicleDTO;
 import com.mytaxi.domainobject.VehicleDO;
@@ -27,27 +28,37 @@ import com.mytaxi.service.vehicle.VehicleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * The vehicle controller serves all requests
+ * for a vehicle.
+ * Have not named it as CarController thinking that
+ * it will become very specific and if in future
+ * we onboard other vehicles then this can be reused.
+ * 
+ * @author Shahbaz.Alam
+ *
+ */
 @RestController
+@Api(tags = {VEHICLE_CONTROLLER})
 @RequestMapping("v1/vehicle")
-@Api(tags = {"tag1"})
 public class VehicleController {
 
 	@Autowired
 	private VehicleService vehicleService;
 
 	@GetMapping("/{vehicleID}")
-	public VehicleDTO getCar(@Valid @PathVariable long vehicleId) {
+	public VehicleDTO getVehicle(@Valid @PathVariable long vehicleId) {
 		return VehicleMapper.makeVehicleDTO(vehicleService.find(vehicleId));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public VehicleDO createCar(@Valid @RequestBody VehicleDTO vehicleDTO) throws ConstraintsViolationException {
+	public VehicleDO createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) throws ConstraintsViolationException {
 		return vehicleService.create(VehicleMapper.makeVehicleDO(vehicleDTO));
 	}
 
 	@DeleteMapping("/{vehicleID}")
-	public void deleteCar(@Valid @PathVariable long vehicleId) {
+	public void deleteVehicle(@Valid @PathVariable long vehicleId) {
 		vehicleService.delete(vehicleId);
 	}
 
@@ -57,7 +68,7 @@ public class VehicleController {
 	}
 
 	@GetMapping
-	@ApiOperation(value="It finds the vehicles")
+	@ApiOperation(value="The method to find all vehicles.")
 	public List<VehicleDTO> findVehicles(@RequestParam(required = false) boolean showDeleted) {
 		return VehicleMapper.makeVehicleDTOList(vehicleService.findAll(), showDeleted);
 	}

@@ -17,9 +17,32 @@ import com.mytaxi.domainvalue.BookingStatus;
 import com.mytaxi.domainvalue.EngineType;
 import com.mytaxi.exception.SearchException;
 
+/**
+ * The deafult search service implementation
+ * actually implements the search method for all
+ * the request queries.
+ * Going forward it can be extended with more
+ * searching capabilities.
+ * 
+ * @author Shahbaz.Alam
+ *
+ */
 @Service
 public class DefaultSearchService implements SearchService{
 
+	/**
+	 * The method does a flat file search on the basis of 
+	 * the query provided by the user. Currently it just checks
+	 * all the flat files in the project directory to find documents
+	 * which contains the given query and populates the searchresultdto
+	 * to be sent back to the caller.
+	 * The implementation is just to show the searching mechanism and it
+	 * is not optimized and scalable. 
+	 * The idea is to build the search capability using enterprise search
+	 * platforms like apache solr, to search and index the documents and
+	 * provide optimize solution.
+	 * However as of now, with limited data set, this serves the purpose.
+	 */
 	@Override
 	public List<SearchResultsDTO> search(String query) {
 		Set<String> matchedDoc = getMatchedDocuments(query);
@@ -54,7 +77,14 @@ public class DefaultSearchService implements SearchService{
 	}
 	
 	
-
+	/**
+	 * the method checks for all the files
+	 * in the path and matches with the query 
+	 * provided.
+	 * 
+	 * @param query
+	 * @return
+	 */
 	private Set<String> getMatchedDocuments(String query) {
 		Set<String> matchedDocName = new HashSet<>();
 		try{

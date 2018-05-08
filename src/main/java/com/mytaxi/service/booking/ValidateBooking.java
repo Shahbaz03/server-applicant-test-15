@@ -3,6 +3,17 @@ package com.mytaxi.service.booking;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.exception.BookingException;
 
+/**
+ * The functional interface is primarily
+ * used for validating all the booking/unbooking
+ * requests.
+ * It checks all the preset conditions before
+ * allowing a driver to book/unbook a vehicle
+ * 
+ * @author Shahbaz.Alam
+ *
+ * @param <T>
+ */
 @FunctionalInterface
 public interface ValidateBooking<T> {
 

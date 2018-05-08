@@ -7,8 +7,8 @@ import javax.validation.Valid;
 
 import com.mytaxi.datatransferobject.VehicleDTO;
 import com.mytaxi.domainobject.VehicleDO;
-import com.mytaxi.domainobject.VehicleManufacturerDO;
-import com.mytaxi.domainobject.VehicleModelDO;
+import com.mytaxi.domainvalue.VehicleManufacturerDO;
+import com.mytaxi.domainvalue.VehicleModelDO;
 
 public class VehicleMapper {
 

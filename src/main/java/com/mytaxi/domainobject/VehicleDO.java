@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.mytaxi.domainvalue.BookingStatus;
+import com.mytaxi.domainvalue.VehicleModelDO;
 
 @Entity
 @Table(name = "vehicle")

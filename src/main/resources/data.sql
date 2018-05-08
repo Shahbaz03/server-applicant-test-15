@@ -50,13 +50,8 @@ insert into vehicle (booking_status, color, date_created, deleted, license_plate
 
 
 insert into vehicle (booking_status, color, date_created, deleted, license_plate, convertible, engine_type, name, seat_count, manufacturer_name, rating, id) values ('UNBOOK', 'BLACK', now(), false, 'KA04555', false, 'GAS', 'maruti 800', 3, 'Maruti', 7, 10025);---- Create 1 Manufacturer
---
---insert into vehicle_manufacturer (id, name) values (1, 'Honda');
---
----- Create 1 Vehicle_Model
---
---insert into vehicle_model (id, name, seat_count, convertible, engine_type, manufacturer) values (1, 'Honda City', 5, false, 'DIESEL', 1);
---
----- Create 1 Vehicle
---
---insert into vehicle (id, date_created, model, license_plate, rating , color) values (1, now(), 1, 'WB04 7890', null, 'RED');
+
+-- Creating Users for Implementing Security
+INSERT INTO User (id, date_created, username, password, enabled) VALUES (1, now(), 'Alex123','$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', true);
+INSERT INTO User (id, date_created, username, password, enabled) VALUES (2, now(), 'Tom234', '$2a$04$PCIX2hYrve38M7eOcqAbCO9UqjYg7gfFNpKsinAxh99nms9e.8HwK', true);
+INSERT INTO User (id, date_created, username, password, enabled) VALUES (3, now(), 'Adam', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', true);

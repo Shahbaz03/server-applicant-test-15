@@ -107,6 +107,11 @@ public class DefaultDriverService implements DriverService {
 		return driversList;
 	}
 	
+	/**
+	 * The method finds the Driver by username
+	 * 
+	 * @throws EntityNotFoundException
+	 */
 	@Override
 	public DriverDO find(String username) {
 		DriverDO driverDO = driverRepository.findByUsername(username);
@@ -115,6 +120,9 @@ public class DefaultDriverService implements DriverService {
 		return driverDO;
 	}
 	
+	/**
+	 * The method finds all the drivers in the system.
+	 */
 	@Override
 	public List<DriverDO> findAll() {
 		return (List<DriverDO>) driverRepository.findAll();

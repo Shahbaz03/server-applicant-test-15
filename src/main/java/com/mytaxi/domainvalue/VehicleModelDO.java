@@ -1,12 +1,10 @@
-package com.mytaxi.domainobject;
+package com.mytaxi.domainvalue;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
-import com.mytaxi.domainvalue.EngineType;
 
 @Embeddable
 public class VehicleModelDO {
