@@ -96,7 +96,7 @@ public class MytaxiServerApplicantTestApplication extends WebMvcConfigurerAdapte
 
 	@Bean
 	public SecurityConfiguration securityInfo() {
-		return new SecurityConfiguration("mytaxi-client", "$2a$04$PYWXQrt1Ju7i8lmY8ry8Ku5ZPEa0TuV.wJHK6AeJhEQHSTBCI3.wq", "", "", "", ApiKeyVehicle.QUERY_PARAM, "", " ");
+		return new SecurityConfiguration("mytaxi-client", "mytaxi-secret", "", "", "", ApiKeyVehicle.QUERY_PARAM, "", " ");
 	}
 
 	private ApiInfo generateApiInfo() {
